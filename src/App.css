@@ -1,0 +1,160 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #888;
+}
+
+.subtitle {
+  color: #888;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.loading {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+.error {
+  color: #e74c3c;
+}
+
+.current-weather {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.weather-icon {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+.temperature {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #aaa;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.details {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.label {
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.value {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.forecast {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.forecast-day {
+  flex: 1;
+  min-width: 70px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.day-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.day-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.day-temps {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.high {
+  font-weight: 600;
+}
+
+.low {
+  color: #888;
+}
+
+.refresh-btn {
+  margin-top: 2rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.refresh-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (prefers-color-scheme: light) {
+  .current-weather,
+  .forecast-day {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .refresh-btn {
+    border-color: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .refresh-btn:hover {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.3);
+  }
+}
