@@ -5,6 +5,21 @@
   text-align: center;
 }
 
+.college-selector {
+  margin-bottom: 1rem;
+}
+
+.college-selector select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  appearance: auto;
+}
+
 h1 {
   font-size: 2rem;
   margin-bottom: 0.25rem;
@@ -142,6 +157,11 @@ h2 {
 }
 
 @media (prefers-color-scheme: light) {
+  .college-selector select {
+    border-color: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.03);
+  }
+
   .current-weather,
   .forecast-day {
     background: rgba(0, 0, 0, 0.03);

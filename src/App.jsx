@@ -1,8 +1,18 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
-const UIUC_LAT = 40.1106
-const UIUC_LON = -88.2073
+const COLLEGES = [
+  { name: 'UIUC', location: 'Champaign-Urbana, IL', lat: 40.1106, lon: -88.2073, timezone: 'America/Chicago' },
+  { name: 'MIT', location: 'Cambridge, MA', lat: 42.3601, lon: -71.0942, timezone: 'America/New_York' },
+  { name: 'Stanford', location: 'Stanford, CA', lat: 37.4275, lon: -122.1697, timezone: 'America/Los_Angeles' },
+  { name: 'Harvard', location: 'Cambridge, MA', lat: 42.3770, lon: -71.1167, timezone: 'America/New_York' },
+  { name: 'UCLA', location: 'Los Angeles, CA', lat: 34.0689, lon: -118.4452, timezone: 'America/Los_Angeles' },
+  { name: 'UC Berkeley', location: 'Berkeley, CA', lat: 37.8719, lon: -122.2585, timezone: 'America/Los_Angeles' },
+  { name: 'Georgia Tech', location: 'Atlanta, GA', lat: 33.7756, lon: -84.3963, timezone: 'America/New_York' },
+  { name: 'UT Austin', location: 'Austin, TX', lat: 30.2849, lon: -97.7341, timezone: 'America/Chicago' },
+  { name: 'UMich', location: 'Ann Arbor, MI', lat: 42.2780, lon: -83.7382, timezone: 'America/New_York' },
+  { name: 'Carnegie Mellon', location: 'Pittsburgh, PA', lat: 40.4433, lon: -79.9436, timezone: 'America/New_York' },
+]
 
 const WMO_CODES = {
   0: { description: 'Clear sky', icon: '☀️' },
@@ -36,19 +46,21 @@ function getWeatherInfo(code) {
 }
 
 function App() {
+  const [selectedCollege, setSelectedCollege] = useState(COLLEGES[0])
   const [weather, setWeather] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    fetchWeather()
-  }, [])
+    fetchWeather(selectedCollege)
+  }, [selectedCollege])
 
-  async function fetchWeather() {
+  async function fetchWeather(college) {
     setLoading(true)
     setError(null)
     try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${UIUC_LAT}&longitude=${UIUC_LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FChicago`
+      const tz = encodeURIComponent(college.timezone)
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${college.lat}&longitude=${college.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,wind_direction_10m&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=${tz}`
       const res = await fetch(url)
       if (!res.ok) throw new Error('Failed to fetch weather data')
       const data = await res.json()
@@ -60,6 +72,11 @@ function App() {
     }
   }
 
+  function handleCollegeChange(e) {
+    const college = COLLEGES.find(c => c.name === e.target.value)
+    if (college) setSelectedCollege(college)
+  }
+
   if (loading) {
     return <div className="container"><p className="loading">Loading weather...</p></div>
   }
@@ -68,7 +85,7 @@ function App() {
     return (
       <div className="container">
         <p className="error">Error: {error}</p>
-        <button onClick={fetchWeather}>Retry</button>
+        <button onClick={() => fetchWeather(selectedCollege)}>Retry</button>
       </div>
     )
   }
@@ -79,8 +96,15 @@ function App() {
 
   return (
     <div className="container">
-      <h1>UIUC Weather</h1>
-      <p className="subtitle">Champaign-Urbana, IL</p>
+      <div className="college-selector">
+        <select value={selectedCollege.name} onChange={handleCollegeChange}>
+          {COLLEGES.map(c => (
+            <option key={c.name} value={c.name}>{c.name}</option>
+          ))}
+        </select>
+      </div>
+      <h1>{selectedCollege.name} Weather</h1>
+      <p className="subtitle">{selectedCollege.location}</p>
 
       <div className="current-weather">
         <div className="weather-icon">{info.icon}</div>
@@ -120,7 +144,7 @@ function App() {
         })}
       </div>
 
-      <button className="refresh-btn" onClick={fetchWeather}>Refresh</button>
+      <button className="refresh-btn" onClick={() => fetchWeather(selectedCollege)}>Refresh</button>
     </div>
   )
 }
